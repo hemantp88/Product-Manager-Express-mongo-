@@ -19,8 +19,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 
-app.get('/dogs', (req, res) => {
-    res.send("wood");
+app.get('/products', async (req, res) => {
+    const products = await Product.find({});
+    res.render('products/index', { products })
 })
 
 
