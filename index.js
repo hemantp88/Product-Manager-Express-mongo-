@@ -16,6 +16,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/farmStand')
         console.log(error);
     })
 
+app.use(express.urlencoded({ extended: true }))
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
@@ -25,6 +27,18 @@ app.get('/products', async (req, res) => {
     res.render('products/index', { products })
 })
 
+app.get('/products/new', (req, res) => {
+    res.render('products/new');
+})
+app.post('/products', async (req, res) => {
+    // console.log(req.body)
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    // console.log(newProduct);
+    // res.send('making your product')
+    res.redirect(`  /products/${newProduct._id}`);
+
+})
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params;
     const foundProduct = await Product.findById(id);
