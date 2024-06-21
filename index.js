@@ -5,6 +5,7 @@ const Product = require('./models/product')
 
 
 const mongoose = require('mongoose');
+const { request } = require('http');
 
 mongoose.connect('mongodb://127.0.0.1:27017/farmStand')
     .then(() => {
@@ -24,6 +25,13 @@ app.get('/products', async (req, res) => {
     res.render('products/index', { products })
 })
 
+app.get('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const foundProduct = await Product.findById(id);
+    console.log(foundProduct);
+    // res.send("details.page!")
+    res.render('products/show', { foundProduct })
+})
 
 
 
