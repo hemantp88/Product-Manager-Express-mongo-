@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const Product = require('./models/product')
+const methodOverride = require('method-override');
 
 
 const mongoose = require('mongoose');
@@ -17,6 +18,9 @@ mongoose.connect('mongodb://127.0.0.1:27017/farmStand')
     })
 
 app.use(express.urlencoded({ extended: true }))
+app.use(methodOverride('_method'));
+
+
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -36,17 +40,24 @@ app.post('/products', async (req, res) => {
     await newProduct.save();
     // console.log(newProduct);
     // res.send('making your product')
-    res.redirect(`  /products/${newProduct._id}`);
+    res.redirect(`/products/${newProduct._id}`);
 
 })
 app.get('/products/:id', async (req, res) => {
     const { id } = req.params;
     const foundProduct = await Product.findById(id);
-    console.log(foundProduct);
-    // res.send("details.page!")
     res.render('products/show', { foundProduct })
 })
-
+app.get('/products/:id/edit', async (req, res) => {
+    const { id } = req.params;
+    const foundProduct = await Product.findById(id);
+    res.render('products/edit', { foundProduct })
+})
+app.put('/products/:id', async (req, res) => {
+    const { id } = req.params;
+    const foundProduct = await Product.findByIdAndUpdate(id, req.body, { runValidators: true, new: true });
+    res.redirect(`/products/${foundProduct._id}`);
+})
 
 
 app.listen(3000, () => {
