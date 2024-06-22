@@ -17,14 +17,14 @@
         <label for="price">Product Price</label>
         <input id="price" type="number" name='price' placeholder="Product Price($)" value="<%=foundProduct.price %>">
         <label for="category">Product Category</label>
-        <select id="category" name='category' value="<%=foundProduct.value %>">
-            <option value="fruit">fruit</option>
-            <option value="dairy">dairy</option>
-            <option value="vegetable">vegetable </option>
+        <select id="category" name='category'>
+            <option value=" fruit" <%=foundProduct.category==='fruit' ? "selected" :" " %>>fruit</option>
+            <option value=" dairy" <%=foundProduct.category==='dairy' ? "selected" :" " %> >dairy</option>
+            <option value=" vegetable" <%=foundProduct.category==='vegetable' ? "selected" :" " %> >vegetable </option>
         </select>
         <button>Submit</button>
     </form>
-    <a href="/products/<%= foundProduct._id %>">Cancel</a>
+    <a href=" /products/<%=foundProduct._id %>">Cancel</a>
 </body>
 
 </html>
