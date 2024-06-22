@@ -18,9 +18,12 @@
         <input id="price" type="number" name='price' placeholder="Product Price($)" value="<%=foundProduct.price %>">
         <label for="category">Product Category</label>
         <select id="category" name='category'>
-            <option value=" fruit" <%=foundProduct.category==='fruit' ? "selected" :" " %>>fruit</option>
-            <option value=" dairy" <%=foundProduct.category==='dairy' ? "selected" :" " %> >dairy</option>
-            <option value=" vegetable" <%=foundProduct.category==='vegetable' ? "selected" :" " %> >vegetable </option>
+            <% for(let category of categories) { %>
+                <option value="<%= category  %>" <%=foundProduct.category===category?'selected':'' %> >
+                    <%= category %>
+                </option>
+                <% } %>
+
         </select>
         <button>Submit</button>
     </form>
